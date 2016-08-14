@@ -90,6 +90,36 @@ namespace DevArt.Tests.dotConnect
         }
 
         [TestMethod]
+        public void DbContext_With_DbConnection_GetDbConnection()
+        {
+            using (var dbConnection = new OracleConnection { ConnectionString = ConnectionString })
+            {
+                using (var dbContext = new TestDbContext(dbConnection))
+                {
+                    Assert.AreSame(dbConnection, dbContext.Database.GetDbConnection());
+                }
+            }
+        }
+
+        [TestMethod]
+        public void DbContext_With_DbConnection_UseTransaction()
+        {
+            using (var dbConnection = new OracleConnection { ConnectionString = ConnectionString })
+            {
+                dbConnection.Open();
+                using (var dbTransaction = dbConnection.BeginTransaction())
+                {
+                    using (var dbContext = new TestDbContext(dbConnection))
+                    {
+                        dbContext.Database.UseTransaction(dbTransaction);
+                        // InvalidOperationException: The specified transaction is not associated with the current connection.
+                        // Only transactions associated with the current connection may be used.
+                    }
+                }
+            }
+        }
+
+        [TestMethod]
         public void DbContext_With_DbConnection_Where_StringField_Equals_Property()
         {
             // Prepare the database with .UseOracle(ConnectionString), because .UseOracle(Connection) is broken.
