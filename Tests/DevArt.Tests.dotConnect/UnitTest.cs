@@ -198,6 +198,31 @@ namespace DevArt.Tests.dotConnect
         }
 
         [TestMethod]
+        [ExpectedException(typeof(DbUpdateConcurrencyException))]
+        public void DbContext_DbUpdateConcurrencyException_Async()
+        {
+            using (var dbContext = new TestDbContext(ConnectionString))
+            {
+                dbContext.Database.EnsureDeleted();
+                dbContext.Database.EnsureCreated();
+
+                var user = new User { Name = "John" };
+                dbContext.Add(user);
+                dbContext.SaveChanges();
+
+                using (var dbContext2 = new TestDbContext(ConnectionString))
+                {
+                    User user2 = dbContext2.Set<User>().Single(u => u.Name == "John");
+                    user2.Name = "Oliver";
+                    dbContext2.SaveChanges();
+                }
+
+                user.LongDescription = "hello";
+                dbContext.SaveChangesAsync().Wait();
+            }
+        }
+
+        [TestMethod]
         public void DbContext_With_LoggerProvider()
         {
             using (var dbContext = new TestDbContext(
