@@ -90,13 +90,13 @@ namespace DevArt.Tests.dotConnect
         }
 
         [TestMethod]
-        public void DbContext_With_DbConnection_GetDbConnection()
+        public void DbContext_With_DbConnection_GetOracleConnection()
         {
             using (var dbConnection = new OracleConnection { ConnectionString = ConnectionString })
             {
                 using (var dbContext = new TestDbContext(dbConnection))
                 {
-                    Assert.AreSame(dbConnection, dbContext.Database.GetDbConnection());
+                    Assert.AreSame(dbConnection, dbContext.Database.GetOracleConnection());
                 }
             }
         }
@@ -218,7 +218,15 @@ namespace DevArt.Tests.dotConnect
                 }
 
                 user.LongDescription = "hello";
-                dbContext.SaveChangesAsync().Wait();
+
+                try
+                {
+                    dbContext.SaveChangesAsync().Wait();
+                }
+                catch (AggregateException ex)
+                {
+                    throw ex.InnerExceptions.Single();
+                }
             }
         }
 
