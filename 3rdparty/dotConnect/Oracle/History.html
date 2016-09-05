@@ -246,6 +246,27 @@
 <div id="pagebody">
 <!-- begin content -->
 
+<p><b>9.1.97 01-Sep-16</b></p>
+<ul>
+ <li>New CharLength and CharUsed columns have been added to the Columns collection of the OracleConnection.GetSchema method</li>
+ <li>The execution of OracleScript with the PL/SQL declaration sections in the WITH clause in Oracle 12c is supported</li>
+ <li>The performance of retrieving metadata for stored procedures in the Direct mode is improved</li>
+ <li>The bug with data preview in the OracleDataTable designer when the command text was changed is fixed</li>
+ <li>The bug with the OracleIntervalDS.Parse() method is fixed</li>
+ <li>The bug with incorrect number mapping for Oracle connection in SSIS project is fixed</li>
+ <li>The bug with losing precision when retrieving Oracle NUMBER, mapped to Decimal via the Number Mappings connection string parameter, into Double/Single values in the OCI mode is fixed</li>
+</ul>
+
+<i>Entity Framework support</i>
+<ul>
+  <li>The DatabaseFacade.GetOracleConnection() extension method, which returns OracleConnection, is implemented in EF Core</li>
+  <li>The bug with using the DatabaseFacade.UseTransaction() method in EF Core is fixed</li>
+  <li>The bug with nullable parameters in EF Core is fixed</li>
+  <li>The bug with throwing System.NullReferenceException when using TPH inheritance in EF Core is fixed</li>
+  <li>The bug with not throwing concurrency check exception on invoking DbContext.SaveChangesAsync() is fixed</li>
+</ul>
+<br/>
+
 <p><b>9.1.82 11-Aug-16</b></p>
 <ul>
  <li>The bug with authentication in Mobile Edition is fixed</li>
