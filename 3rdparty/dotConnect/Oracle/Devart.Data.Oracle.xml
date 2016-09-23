@@ -2093,7 +2093,7 @@
     <member name="M:Devart.Data.Oracle.OracleCommandBuilder.GetRefreshCommand()">
       <summary>Gets the automatically generated SQL statement required to refresh values from the data source. </summary>
       <keywords>OracleCommandBuilder.GetRefreshCommand method </keywords>
-      <returns>A <see cref="T:Devart.Common.DbCommand" /> with <see cref="P:Devart.Common.DbCommand.CommandText" /> containing SQL statement to be executed. </returns>
+      <returns>A <see cref="T:Devart.Common.DbCommand" /> with <see cref="P:Devart.Common.DbCommandBase.CommandText" /> containing SQL statement to be executed. </returns>
       <overloads>Gets the automatically generated SQL statement required to refresh values from the data source. </overloads>
     </member>
     <member name="M:Devart.Data.Oracle.OracleCommandBuilder.GetRefreshCommand(System.Boolean)">
@@ -7461,9 +7461,9 @@ queued persistently in the database before delivery; otherwise, <see langword="f
       <value>The name of the <see cref="T:Devart.Data.Oracle.OracleParameter" />. The default value is an empty string (""). </value>
     </member>
     <member name="P:Devart.Data.Oracle.OracleParameter.Precision">
-      <summary>Gets or sets the maximum number of digits used to represent the <see cref="P:Devart.Common.DbParameter.Value" /> property. </summary>
+      <summary>Gets or sets the maximum number of digits used to represent the <see cref="P:Devart.Common.DbParameterBase.Value" /> property. </summary>
       <keywords>OracleParameter.Precision property </keywords>
-      <value>The maximum number of digits used to represent the <see cref="P:Devart.Common.DbParameter.Value" /> property. The default value is 0. </value>
+      <value>The maximum number of digits used to represent the <see cref="P:Devart.Common.DbParameterBase.Value" /> property. The default value is 0. </value>
     </member>
     <member name="P:Devart.Data.Oracle.OracleParameter.RecordTypeName">
       <summary>Gets or sets a name for the PL/SQL record type. </summary>
@@ -7475,14 +7475,14 @@ queued persistently in the database before delivery; otherwise, <see langword="f
       <keywords>OracleParameter.ResetDbType method </keywords>
     </member>
     <member name="P:Devart.Data.Oracle.OracleParameter.Scale">
-      <summary>Gets or sets the number of decimal places to which <see cref="P:Devart.Common.DbParameter.Value" /> is resolved. </summary>
+      <summary>Gets or sets the number of decimal places to which <see cref="P:Devart.Common.DbParameterBase.Value" /> is resolved. </summary>
       <keywords>OracleParameter.Scale property </keywords>
-      <value>The number of decimal places to which <see cref="P:Devart.Common.DbParameter.Value" /> is resolved. The default value is 0. </value>
+      <value>The number of decimal places to which <see cref="P:Devart.Common.DbParameterBase.Value" /> is resolved. The default value is 0. </value>
     </member>
     <member name="M:Devart.Data.Oracle.OracleParameter.ToString()">
-      <summary>Gets a string containing the <see cref="P:Devart.Common.DbParameter.ParameterName" />. </summary>
+      <summary>Gets a string containing the <see cref="P:Devart.Common.DbParameterBase.ParameterName" />. </summary>
       <keywords>OracleParameter.ToString method </keywords>
-      <returns>A string containing the <see cref="P:Devart.Common.DbParameter.ParameterName" />. </returns>
+      <returns>A string containing the <see cref="P:Devart.Common.DbParameterBase.ParameterName" />. </returns>
     </member>
     <member name="P:Devart.Data.Oracle.OracleParameter.Value">
       <summary>Gets or sets the value of the parameter. </summary>
