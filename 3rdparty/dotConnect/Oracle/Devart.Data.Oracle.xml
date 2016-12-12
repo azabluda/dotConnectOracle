@@ -2,8 +2,8 @@
 <doc>
   <assembly>
     <name>Devart.Data.Oracle</name>
-    <version>8.5.577.0</version>
-    <fullname>Devart.Data.Oracle, Version=8.5.577.0, Culture=neutral, PublicKeyToken=09af7300eec23701</fullname>
+    <version>9.0.17.0</version>
+    <fullname>Devart.Data.Oracle, Version=9.0.17.0, Culture=neutral, PublicKeyToken=09af7300eec23701</fullname>
   </assembly>
   <members>
     <member name="N:Devart.Common">
@@ -606,6 +606,16 @@
     </member>
     <member name="M:Devart.Data.Oracle.DirectUtils.#ctor()">
       <summary>Initializes a new instance of the <see cref="T:Devart.Data.Oracle.DirectUtils" /> class. </summary>
+    </member>
+    <member name="P:Devart.Data.Oracle.DirectUtils.DataIntegrityLevel">
+      <summary>Determines whether to use Oracle Advanced Security data integrity in the <see cref="P:Devart.Data.Oracle.OracleConnection.Direct" /> mode. </summary>
+      <keywords>DirectUtils.DataIntegrityLevel property </keywords>
+      <value>One of the <see cref="T:Devart.Data.Oracle.DirectUtils.SecurityLevel" /> values. </value>
+    </member>
+    <member name="P:Devart.Data.Oracle.DirectUtils.EncryptionLevel">
+      <summary>Determines whether to use Oracle Advanced Security data encryption in the <see cref="P:Devart.Data.Oracle.OracleConnection.Direct" /> mode. </summary>
+      <keywords>DirectUtils.EncryptionLevel property </keywords>
+      <value>One of the <see cref="T:Devart.Data.Oracle.DirectUtils.SecurityLevel" /> values. </value>
     </member>
     <member name="P:Devart.Data.Oracle.DirectUtils.OldAuthMode">
       <summary>Allows switching the algorithm for password encryption. </summary>
@@ -5558,6 +5568,7 @@ In C#, this property is the indexer for the <see cref="T:Devart.Data.Oracle.Orac
     </member>
     <member name="F:Devart.Data.Oracle.OracleLoaderOptions.CheckConstraints">
       <summary>Don't disable constraints. By default, constraints are disabled when using array binding or when using direct path to load data into a specified <see cref="P:Devart.Data.Oracle.OracleLoader.PartitionName">partition</see> of a partitioned table. </summary>
+      <keywords>OracleLoaderOptions.CheckConstraints field </keywords>
     </member>
     <member name="F:Devart.Data.Oracle.OracleLoaderOptions.Default">
       <summary>Default behavior. </summary>
@@ -9109,7 +9120,8 @@ The default value is <see cref="T:Devart.Data.Oracle.OracleQueueVisibility">Orac
       <summary>Represents the method that will handle the <see cref="E:Devart.Data.Oracle.OracleQueue.OnMessage" /> event of an OracleQueue. </summary>
       <keywords>OracleQueueMessageEventHandler delegate </keywords>
       <param name="sender">The source of the event. </param>
-      <param name="e">An <see cref="T:Devart.Data.Oracle.OracleQueueMessageEventArgs" /> object that contains the event data. </param>
+      <param name="e"><para>An <see cref="T:Devart.Data.Oracle.OracleQueueMessageEventArgs" /> object that contains the event data.</para>
+<para><b>Note:</b> This delegate is not available in .NET Standard 1.3 compatible assembly. It is available only in the assembly for full .NET Framework.</para> </param>
     </member>
     <member name="T:Devart.Data.Oracle.OracleQueueMessageGrouping">
       <summary>Specifies the message grouping behaviour. </summary>

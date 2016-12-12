@@ -447,6 +447,11 @@
             Default value is false.
             </summary>
         </member>
+        <member name="T:Devart.Data.Oracle.Entity.OracleJsonFunctions">
+            <summary>
+            Oracle JSON functions.
+            </summary>
+        </member>
         <member name="T:Devart.Data.Oracle.Entity.OracleSpatialFunctions">
             <summary>
             Oracle Spatial functions.

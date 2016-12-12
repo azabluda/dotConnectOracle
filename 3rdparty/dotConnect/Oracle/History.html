@@ -246,6 +246,91 @@
 <div id="pagebody">
 <!-- begin content -->
 
+<p><b>9.2.162 08-Dec-16</b></p>
+<ul>
+  <li>The 'Do not install assemblies in the GAC' check box that allows disabling placing the provider assemblies to the GAC is 
+added to the Install Wizard</li>
+  <li>Oracle ANYDATA type is supported in the Direct mode</li>
+  <li>The InitialLobFetchSize property of OracleCommand is supported in the Direct mode</li>
+  <li>The bug with generating an error when using OracleMonitor on Linux is fixed</li>
+  <li>The bug with losing Errors of an OracleException object when performing binary serialization is fixed</li>
+  <li>The bug with not using parameters value in ParentRelation data in OracleDataTable.SelectCommand is fixed</li>
+</ul>
+
+<i>LinqConnect (formerly known as LINQ to Oracle)</i>
+<ul>
+  <li>The exception message for invoking CreateDatabase() for the model which includes an association with missing end is improved</li>
+</ul>
+
+<i>Entity Developer</i>
+<ul>
+  <li>The possibility to choose whether to add new entities to a diagram or not in Update From Database Wizard is implemented</li>
+  <li>The behaviour is changed: now the DbContext template generates an additional partial class for the context class when "File Per Class" and "Generate Partial Class" are set to True (Entity Framework models)</li>
+</ul>
+
+<i>Entity Framework support</i>
+<ul>
+  <li>Entity Framework Core 1.1.0 is supported</li>
+  <li>The Scaffold-DbContext NuGet command of Package Manager Console for generating a model basing on the existing database schema is supported in EF Core</li>
+  <li>Batch Updates support in EF Core is added</li>
+  <li>The OracleJsonFunctions class is implemented in EF4/EF5/EF6 to use JSON functions and operators in LINQ to Entities queries</li>
+  <li>Signed versions of NetTopologySuite GIS library are supported in EF5/EF6</li>
+  <li>NetTopologySuite 1.14 is supported in EF5/EF6</li>
+  <li>GeoAPI 1.7.4 is supported in EF5/EF6</li>
+  <li>The NetTopologySuiteSigned and NetTopologySuiteUnsigned members are added to the SpatialServiceType enum in EF5/EF6</li>
+  <li>The config.DatabaseScript.Schema.DeleteDatabaseBehaviour option is supported in EF Core</li>
+  <li>The behaviour is changed: the functionality of SpatialServiceType.NetTopologySuiteSigned is moved to Devart.Data.Oracle.Entity.EF5.dll / 
+Devart.Data.Oracle.Entity.EF6.dll</li>
+<li>The behaviour is changed: the errors thrown by executing SQL statement CREATE/DROP USER are ignored</li> 
+  <li>The bug with shortening PK, FK, IX, UX names in the Code-First CreateDatabase/CreateDatabaseScript functionality when 
+config.CodeFirstOptions.TruncateLongDefaultNames=True is fixed</li>
+  <li>The bug with comparison in LINQ query when config.QueryOptions.UseCSharpNullComparisonBehavior=true is fixed</li>
+  <li>The bug with creating database objects in the same schema by several EF6 contexts in Code-First approach is fixed</li>
+  <li>The bug with adding all available objects to the model (instead of the selected ones) by Entity Data Model Wizard is fixed</li>
+  <li>The bugs with logical expressions in EF Core are fixed</li>
+</ul>
+<br/>
+
+<p><b>9.1.131 20-Oct-16</b></p>
+<ul>
+  <li>The Data Encryption and Data Integrity feature in the Direct mode is supported</li>
+  <li>The EZCONNECT format is supported in the Direct mode</li>
+  <li>The bug with inserting a collection of Guid when using array binding in the OCI mode if Size is not explicitly set for the corresponding parameters of the OracelDbType.Raw type is fixed</li>
+</ul>
+
+<i>Entity Framework support</i>
+<ul>
+  <li>The bug with materializing object, which includes the DbGeometry or DbGeography properties, when executing SQL query via DbContext.Database.SqlQuery&lt&gt in EF5 and EF6 is fixed</li>
+</ul>
+<br/>
+
+
+<p><b>9.1.121 06-Oct-16</b></p>
+<ul>
+  <li>The performance of retrieving data in the Direct mode is improved</li>
+  <li>The output of the domain to the "machine" column and output of the "process" column values in the Direct mode are supported</li>
+  <li>The bug with not executing a procedure on the server side when the query text is "CALL procedure_name()" in the Direct mode is fixed</li>
+</ul>
+
+<i>LinqConnect (formerly known as LINQ to Oracle)</i>
+<ul>
+  <li>The bug with reading columns of the base type in TPT inheritance via .OfType() of LINQ query</li>
+  <li>The bug with loading objects via association which targets to the base class of an inheritance with the materialized child class is fixed</li>
+  <li>The bug with throwing "Sequence contains more than one element" when reading objects of TPT hierarchy is fixed</li>
+</ul>
+
+<i>Entity Developer</i>
+<ul>
+  <li>The generation of static methods by the EntityObject template is supported via the new property Direct Call of EntityMethod (Entity Framework models)</li>
+</ul>
+
+<i>Entity Framework support</i>
+<ul>
+  <li>The bug with throwing ORA-00918 by .Include() and .Take() in EF Core when working with Oracle 12c is fixed</li>
+  <li>The bug with comparing bool class property with some value in EF Core is fixed</li>
+</ul>
+<br/>
+
 <p><b>9.1.111 22-Sep-16</b></p>
 <ul>
  <li>The binary serialization is added to OracleString, OracleBinary, OracleNumber, OracleDate, OracleIntervalDS, and OracleIntervalYM structures</li>
@@ -268,7 +353,7 @@
   <li>The config.SpatialOptions.ReadAs2D configuration option (default value is False) is implemented for EF5 / EF6 to treat 3D SDO_GEOMETRY objects as 2D</li>
   <li>The new optional parameter Action<OracleDbContextOptionsBuilder> is added to UseOracle() extension method of DbContextOptionsBuilder in EF Core</li>
   <li>The behaviour is changed: FK constraints within CREATE TABLE are named now in Code-First Migrations</li>
-  <li>The bug with using Take(0) with the entity, which includes the DbGeometry or DbGeography fields, in EF Core is fixed</li>
+  <li>The bug with using Take(0) with the entity, which includes the DbGeometry or DbGeography fields, in EF5/EF6 is fixed</li>
   <li>The bug with paging in EF Core, when working with Oracle 11g and below, is fixed</li>
   <li>The bug with processing IN expressions in EF Core is fixed</li>
   <li>The bug with retrieving objects of TPH hierarchy in EF Core is fixed</li>
@@ -552,7 +637,7 @@
 <i>LinqConnect (formerly known as LINQ to Oracle)</i>
 <ul>
    <li>The bug related to the "Index was out of range. Must be non-negative and less than the size of the collection." error when enumerating an IQueryable collection is fixed</li>
-   <li>The bug with materializing objects having EntitySet<T> fields via non-anonymous class that is not included in the model is fixed</li>
+   <li>The bug with materializing objects having EntitySet&ltT&gt fields via non-anonymous class that is not included in the model is fixed</li>
 </ul>
 
 <i>Entity Framework support</i>
