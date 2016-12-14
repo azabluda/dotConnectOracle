@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DevArt.Tests.dotConnect
 {
+    using System.Collections.Generic;
+
     public class Folder
     {
         public int Id { get; set; }
@@ -18,6 +20,7 @@ namespace DevArt.Tests.dotConnect
         public int Id { get; set; }
         public string Name { get; set; }
         public string LongDescription { get; set; }
+        public ICollection<Folder> OwnedFolders { get; set; }
     }
 
     public class TestDbContext : DbContext
@@ -56,7 +59,7 @@ namespace DevArt.Tests.dotConnect
             folder.Property(f => f.Name).IsRequired().HasMaxLength(100);
             folder
                 .HasOne(f => f.Owner)
-                .WithMany()
+                .WithMany(u => u.OwnedFolders)
                 .HasForeignKey(f => f.OwnerId)
                 .OnDelete(DeleteBehavior.Restrict);
 

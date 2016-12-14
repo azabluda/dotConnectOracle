@@ -29,6 +29,34 @@ namespace DevArt.Tests.dotConnect
         }
 
         [TestMethod]
+        public void DbContext_Select_Contains()
+        {
+            using (var dbContext = new TestDbContext(ConnectionString))
+            {
+                dbContext.Database.EnsureDeleted();
+                dbContext.Database.EnsureCreated();
+
+                dbContext.Set<User>()
+                    .Select(u => u.Name)
+                    .Contains("Hello");
+            }
+        }
+
+        [TestMethod]
+        public void DbContext_Select_Where_Take_Count()
+        {
+            using (var dbContext = new TestDbContext(ConnectionString))
+            {
+                dbContext.Database.EnsureDeleted();
+                dbContext.Database.EnsureCreated();
+
+                dbContext.Set<User>()
+                    .Where(u => u.OwnedFolders.Take(2).Count() == 2)
+                    .ToList();
+            }
+        }
+
+        [TestMethod]
         public void DbContext_Include_OrderBy_First()
         {
             using (var dbContext = new TestDbContext(ConnectionString))
