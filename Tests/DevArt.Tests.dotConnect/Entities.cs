@@ -23,19 +23,23 @@ namespace DevArt.Tests.dotConnect
     public class TestDbContext : DbContext
     {
         private readonly Action<DbContextOptionsBuilder> configure;
+        private readonly Action<ModelBuilder> postModelCreating;
 
-        public TestDbContext(Action<DbContextOptionsBuilder> configure)
+        public TestDbContext(
+            Action<DbContextOptionsBuilder> configure,
+            Action<ModelBuilder> postModelCreating)
         {
             this.configure = configure;
+            this.postModelCreating = postModelCreating;
         }
 
         public TestDbContext(string connectionString)
-            : this(builder => builder.UseOracle(connectionString))
+            : this(builder => builder.UseOracle(connectionString), null)
         {
         }
 
         public TestDbContext(DbConnection dbConnection)
-            : this(builder => builder.UseOracle(dbConnection))
+            : this(builder => builder.UseOracle(dbConnection), null)
         {
         }
 
@@ -61,6 +65,8 @@ namespace DevArt.Tests.dotConnect
             user.Property(u => u.Id).ValueGeneratedOnAdd();
             user.Property(u => u.Name).IsRequired().HasMaxLength(100).IsConcurrencyToken();
             user.Property(u => u.LongDescription);
+
+            postModelCreating?.Invoke(modelBuilder);
         }
     }
 }

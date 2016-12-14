@@ -231,7 +231,7 @@ namespace DevArt.Tests.dotConnect
         }
 
         [TestMethod]
-        public void DbContext_With_LoggerProvider()
+        public void DbContext_With_LoggerProvider_And_Named_Index()
         {
             using (var dbContext = new TestDbContext(
                 builder =>
@@ -241,6 +241,10 @@ namespace DevArt.Tests.dotConnect
                     var loggerFactory = new LoggerFactory();
                     loggerFactory.AddProvider(new NullLoggerProvider());
                     builder.UseLoggerFactory(loggerFactory);
+                },
+                modelBuilder =>
+                {
+                    modelBuilder.Entity<User>().HasIndex(u => u.Name).HasName("USER_NAME_IDX");
                 }))
             {
                 dbContext.Database.EnsureDeleted();
