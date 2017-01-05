@@ -246,6 +246,21 @@
 <div id="pagebody">
 <!-- begin content -->
 
+<p><b>9.2.172 22-Dec-16</b></p>
+<ul>
+  <li>The behaviour is changed: the OracleArray constructor now verifies that OracleArray is not created for a UDT that is not VARRAY</li>
+  <li>The bug with throwing NRE in the OracleObject and OracleArray classes is fixed</li>
+</ul>
+
+<i>Entity Framework support</i>
+<ul>
+  <li>The bug with grouping by constant expression in EF1/EF4/EF5/EF6 when using DevExpress.XtraGrid.GridControl is fixed</li>
+  <li>The bug with creating indices by EF Core Code-First migrations is fixed</li>
+  <li>The bug with setting parameter type when generating the IN expression with subselect in EF Core is fixed</li>
+</ul>
+<br/>
+
+
 <p><b>9.2.162 08-Dec-16</b></p>
 <ul>
   <li>The 'Do not install assemblies in the GAC' check box that allows disabling placing the provider assemblies to the GAC is 
