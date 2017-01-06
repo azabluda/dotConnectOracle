@@ -1,8 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Devart.Data.Oracle;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DevArt.Tests.dotConnect
@@ -266,6 +271,7 @@ namespace DevArt.Tests.dotConnect
                 {
                     builder.UseOracle(ConnectionString);
 
+                    // REMOVE after DbContext_Model_Caching is fixed
                     var loggerFactory = new LoggerFactory();
                     loggerFactory.AddProvider(new NullLoggerProvider());
                     builder.UseLoggerFactory(loggerFactory);
@@ -277,6 +283,105 @@ namespace DevArt.Tests.dotConnect
             {
                 dbContext.Database.EnsureDeleted();
                 dbContext.Database.EnsureCreated();
+            }
+        }
+
+        [TestMethod]
+        public void SqlGenerator_DropForeignKey()
+        {
+            using (var dbContext = new TestDbContext(ConnectionString))
+            {
+                var op = new DropForeignKeyOperation
+                {
+                    IsDestructiveChange = false,
+                    Name = "A",
+                    Schema = "B",
+                    Table = "C"
+                };
+
+                dbContext.GetService<IMigrationsSqlGenerator>().Generate(new List<MigrationOperation> { op });
+            }
+        }
+
+        [TestMethod]
+        public void SqlGenerator_DropUniqueConstraint()
+        {
+            using (var dbContext = new TestDbContext(ConnectionString))
+            {
+                var op = new DropUniqueConstraintOperation()
+                {
+                    IsDestructiveChange = false,
+                    Name = "A",
+                    Schema = "B",
+                    Table = "C"
+                };
+
+                dbContext.GetService<IMigrationsSqlGenerator>().Generate(new List<MigrationOperation> { op });
+            }
+        }
+
+
+        [TestMethod]
+        public void ModelDiffer_ColumnType_Explicit_Vs_Conventional()
+        {
+            // DbContext with conventional column type for USERS.NAME
+            using (var dbContext1 = new TestDbContext(ConnectionString))
+            {
+                // DbContext with explicit column type for USERS.NAME
+                using (var dbContext2 = new TestDbContext(
+                    builder =>
+                    {
+                        builder.UseOracle(ConnectionString);
+
+                        // REMOVE after DbContext_Model_Caching is fixed
+                        var loggerFactory = new LoggerFactory();
+                        loggerFactory.AddProvider(new NullLoggerProvider());
+                        builder.UseLoggerFactory(loggerFactory);
+                    },
+                    modelBuilder =>
+                    {
+                        modelBuilder.Entity<User>().Property(u => u.Name).HasColumnType("NCLOB");
+                    }))
+                {
+                    var differ = dbContext1.GetService<IMigrationsModelDiffer>();
+                    Func<IModel, string> generateDdl = model =>
+                    {
+                        IReadOnlyList<MigrationOperation> ops = differ.GetDifferences(null, model);
+                        IReadOnlyList<MigrationCommand> cmds = dbContext1.GetService<IMigrationsSqlGenerator>().Generate(ops);
+                        return string.Join(
+                            Environment.NewLine,
+                            cmds.Select(c => c.CommandText + Environment.NewLine + "/" + Environment.NewLine));
+                    };
+
+                    // DDLs for both models are identical
+                    string ddl1 = generateDdl(dbContext1.Model);
+                    string ddl2 = generateDdl(dbContext2.Model);
+                    Assert.AreEqual(ddl1, ddl2);
+
+                    // There should be no migration operations
+                    IReadOnlyList<MigrationOperation> migrationOperations =
+                        differ.GetDifferences(
+                            dbContext1.Model,
+                            dbContext2.Model);
+                    Assert.IsFalse(migrationOperations.Any());
+                }
+            }
+        }
+
+        [TestMethod]
+        public void DbContext_Model_Caching()
+        {
+            // DbContext with standard model
+            using (var dbContext1 = new TestDbContext(ConnectionString))
+            {
+                // DbContext with modified model
+                using (var dbContext2 = new TestDbContext(
+                    builder => builder.UseOracle(ConnectionString),
+                    modelBuilder => modelBuilder.Entity<User>().Property(u => u.Name).IsRequired(false)))
+                {
+                    Assert.IsFalse(dbContext1.Model.FindEntityType(typeof(User)).FindProperty("Name").IsNullable);
+                    Assert.IsTrue(dbContext2.Model.FindEntityType(typeof(User)).FindProperty("Name").IsNullable);
+                }
             }
         }
 
