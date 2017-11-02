@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using Devart.Data.Oracle;
+using Devart.Data.Oracle.Entity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
