@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using Devart.Data.Oracle;
 using Devart.Data.Oracle.Entity;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Migrations.Operations;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -156,6 +156,26 @@ namespace DevArt.Tests.dotConnect
             using (var dbConnection = new OracleConnection { ConnectionString = ConnectionString })
             {
                 using (var dbContext = new TestDbContext(dbConnection))
+                {
+                    dbContext.Database.EnsureDeleted();
+                }
+            }
+        }
+
+        [TestMethod]
+        public void DbContext_With_DbConnection_EnsureDeleted2()
+        {
+            var serviceCollection = new ServiceCollection();
+            new OracleOptionsExtension().ApplyServices(serviceCollection);
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
+            using (var dbConnection = new OracleConnection { ConnectionString = ConnectionString })
+            {
+                var optionsBuilder = new DbContextOptionsBuilder();
+                optionsBuilder.UseInternalServiceProvider(serviceProvider);
+                optionsBuilder.UseOracle(dbConnection);
+
+                using (var dbContext = new DbContext(optionsBuilder.Options))
                 {
                     dbContext.Database.EnsureDeleted();
                 }
