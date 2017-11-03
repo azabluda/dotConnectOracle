@@ -17,7 +17,11 @@ namespace DevArt.Tests.dotConnect
     [TestClass]
     public class UnitTest
     {
-        private const string ConnectionString = "User Id=pvs_c;Password=ic1;Server=demo11g;Direct=True;Sid=emp";
+        private const string ConnectionStringVarName = "Test_DotConnect_DefaultConnection";
+
+        private string ConnectionString =>
+            Environment.GetEnvironmentVariable(ConnectionStringVarName)
+            ?? throw new Exception($"Environment variable '{ConnectionStringVarName}' must be defined, e.g. in the Debug section of the project properties.");
 
         [TestMethod]
         public void DbContext_Select_Where_ClobField()
