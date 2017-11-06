@@ -183,6 +183,21 @@ namespace DevArt.Tests.dotConnect
         }
 
         [TestMethod]
+        public void DbContext_With_DbConnection_EnsureDeleted3()
+        {
+            using (var dbConnection = new OracleConnection { ConnectionString = ConnectionString })
+            {
+                var optionsBuilder = new DbContextOptionsBuilder();
+                optionsBuilder.UseOracle(dbConnection);
+
+                using (var dbContext = new DbContext(optionsBuilder.Options))
+                {
+                    dbContext.Database.EnsureDeleted();
+                }
+            }
+        }
+
+        [TestMethod]
         public void DbContext_With_DbConnection_GetOracleConnection()
         {
             using (var dbConnection = new OracleConnection { ConnectionString = ConnectionString })
