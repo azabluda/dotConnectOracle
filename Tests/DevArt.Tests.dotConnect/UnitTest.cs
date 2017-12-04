@@ -119,27 +119,34 @@ namespace DevArt.Tests.dotConnect
             // Works fine without .OrderBy
             using (var dbContext = new TestDbContext(ConnectionString))
             {
-                dbContext.Set<Folder>()
+                var folder = dbContext.Set<Folder>()
                     .Include(f => f.Owner)
                     .First();
+                Assert.AreEqual("test", folder.Name);
+                Assert.AreEqual("John", folder.Owner.Name);
             }
 
             // Works fine without .First
             using (var dbContext = new TestDbContext(ConnectionString))
             {
-                dbContext.Set<Folder>()
+                var folders = dbContext.Set<Folder>()
                     .Include(f => f.Owner)
                     .OrderBy(f => f.Id)
                     .ToList();
+                var folder = folders.First();
+                Assert.AreEqual("test", folder.Name);
+                Assert.AreEqual("John", folder.Owner.Name);
             }
 
             // Fails with .OrderBy.First
             using (var dbContext = new TestDbContext(ConnectionString))
             {
-                dbContext.Set<Folder>()
+                var folder = dbContext.Set<Folder>()
                     .Include(f => f.Owner)
                     .OrderBy(f => f.Id)
                     .First();
+                Assert.AreEqual("test", folder.Name);
+                Assert.AreEqual("John", folder.Owner.Name);
             }
         }
 
